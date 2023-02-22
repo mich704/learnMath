@@ -1,0 +1,67 @@
+<% layout('layouts/boilerplate') %>
+
+
+    
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div class="card mb-2" style="height: auto;">
+            <div class="card-body text-center">
+              <img src="/images/profile/profileLogo1.png" alt="avatar"
+                class="rounded-circle img-fluid" style="width: 10rem;">
+              <h5 class="my-3"><%=loginUser.username %> </h5>
+              <p class="text-muted mb-1"><%=loginUser.role %></p>
+              <p class="text-muted mb-2"><%= loginUser.email %></p>
+              <p class="text-muted mb-2">Zalogowano <%= Date(loginUser.lastLoginTime) %></p>
+              <a href="<%=loginUser._id %>/edit"><button type="button" class="btn btn-success">⚙️Edytuj dane</button></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div class="card mb-2" style="height: auto;">
+            <div class="card-body text-center">
+              <div class="mt-2" >
+                <table class="table table-striped">
+                  <h3 class="card-title" style="text-align:center;">Postęp:</h3>
+                  <thead>
+                    
+                    <tr>
+                      <th scope="col">Poziom</th>
+                      <th scope="col" >
+                        <div class="starability-basic" style="display: inline;">
+                          <input type="radio" id="rate1" name="rating" value="<%=urlUser.stars %>" />
+                          <label for="rate1" title="<%=urlUser.stars %>"></label>
+                        </div>
+                       </th>
+                   
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="table-info">
+                      <td> <%=Math.floor(urlUser.stars/10+1)%></td>
+                      <td><%=urlUser.stars %></td>
+                    </tr>
+                   
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        
+
+        
+        
+            
+           
+ 
+   
+     
+
+
+
+
+

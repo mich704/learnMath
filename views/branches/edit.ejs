@@ -1,0 +1,28 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="row">
+    <h1 class="text-center">Edytuj dział:</h1>
+    <div class="col-6 offset-3">
+        <form action="/branches/<%= branch._id %>?_method=PUT" method="POST" novalidate class="validated-form">
+            <div>
+                <div class="mb-3">
+                    <label class="form-label" for="name">Nazwa</label>
+                    <input class="form-control" type="text" id="name" name="branch[name]" value="<%= branch.name %>" required>
+                </div>
+                
+                    <div class="mb-3">
+                        <label class="form-label"  for="description">Opis</label>
+                        <textarea class="form-control" cdkTextareaAutosize id="description" name="branch[description]" required><%= branch.description %> </textarea>
+                    </div>
+                
+                
+            </div>
+            <button class="btn btn-success">Zapisz</button>
+        </form>
+        <a href="/branches">Strona działów</a>
+        <br>
+        <a href="/branches/<%= branch._id %>">Wróć do działu</a>
+    </div>
+   
+</div>
+    

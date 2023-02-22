@@ -1,0 +1,180 @@
+<link rel="stylesheet" href="/stylesheets/exerciseShow.css">
+
+<% layout('layouts/boilerplate') %>
+
+    <div class="row">
+        <div class="col-md-8  offset-md-2">
+            <div class="card mb-3">
+                <div class="card-body" id="desc">
+                    <h2 class="card-title" style="text-align: center;"><%= branch.name %></h2>
+                    <p class="card-text"> <%- include(`../partials/${branch.name}/opis`, {branch}) %>  </p>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <a href="/branches" class="btn btn-primary">⏪ Powrót do działów</a> 
+                            
+                            <% if(loginUser && loginUser.role !=='Uczeń') {%>  
+                                <a href="/branches/<%= branch._id %>/edit"><button class="btn btn-warning" style="background-color: #f5ebe0; border-color: #f5ebe0"> &#128394; Edytuj </button></a>
+                                <!-- <form class="d-inline" action="/branches/<%= branch._id %>?_method=DELETE" method="POST">
+                                    <button class="btn btn-danger">Usuń</button>
+                                </form> -->
+                            
+                                
+                               
+                                <% } %>
+                        </li>
+                        <% if(loginUser && loginUser.role !=='Uczeń') {%>  
+                            <li class="list-group-item">
+                                <%- include('../testsViews/new') %>
+                                <a href="/branches/<%= branch._id %>/tests/"><button class="btn btn-warning">📖 Wyświetl testy</button></a> 
+                            </li>
+                            <li class="list-group-item">
+                               <a href="/branches/<%= branch._id %>/exercises/newExercise"><button> ➕ Stwórz nowe zadanie!</button></a>
+                            </li>
+                        <% } %>
+                            
+
+                    </ul>
+                    
+                    
+                </div>
+                <!-- <img src= alt="Italian Trulli"> -->
+            </div>
+        </div>
+        
+            <% if(loginUser && loginUser.role != 'Uczeń'){ %> 
+            <div class="col-md-8  offset-md-4">
+                <nav id="pageNav" aria-label="Page navigation example">
+                    <ul class="pagination">
+                       <%var pages = Math.ceil(branch.exercises.length/5) %> 
+                  
+                       <% if(currentPage==1){  %>
+                        <li class="disabled page-item"><a class="page-link" href="" >Poprzednia</a></li>
+                        <% }else{ %>
+                            <li class="page-item"><a class="page-link" href="/branches/<%=branch._id %>/<%=currentPage-1 %>" >Poprzednia</a></li>
+                        <% } %> 
+                       <% for(var i = 0 ; i<pages ; i++){ %>  
+                            <% if(i==currentPage-1){ %>
+                                <li class="page-item active"><a class="page-link" href="/branches/<%=branch._id %>/<%=i+1 %>" ><%=i+1 %> </a></li>
+                            <% }else{ %>
+                                <li class="page-item"><a class="page-link" href="/branches/<%=branch._id %>/<%=i+1 %>"><%=i+1 %> </a></li>
+                            <% } %>  
+                        <% } %>
+                        <% if(currentPage==pages){  %>
+                            <li class="disabled page-item"><a class="page-link" href="" >Następna</a></li>
+                        <% }else{ %>
+                            <li class="page-item"><a class="page-link" href="/branches/<%=branch._id %>/<%= parseInt(currentPage) + 1 %>" >Następna</a></li>
+                        <% } %>  
+                  
+                    </ul>
+                  </nav>
+            </div>
+            <div class="col-md-8  offset-md-2 mb-5">
+                
+            
+              
+                <% for( let i = start ; i <= end ; i++ ) { %>
+                    <% var exercise =  branch.exercises[i] %> 
+                    <% if(exercise){ %> 
+                    <div id="ex" class="card mb-3 ">
+                        <div class="mb-3 ms-3 card-body">
+                            <h4 class="card-title">Treść zadania:</h4>
+                            <p class="card-text  mb-1" id="exDesc">                            
+                                $<%= exercise.description %>$
+                            </p>
+                            <hr>
+                        
+                            <% if(exercise.image){ %> 
+                                <div class="card mb-3 me-3 ms-3">
+                                    <img id="exImg" src="/images/exercises/<%= exercise.image.name %>" alt="obraz" width="auto">
+                                </div>
+                                
+                            
+                            <% } %>  
+                            <h6 class="card-title" >Odpowiedzi:</h6>
+                            <ul id="answers" >
+                            <% for( let a of exercise.answers ) { %>
+
+                                <li class="mb-1">$<%= a %>$</li>
+                            <% } %>
+                            </ul>
+                            <% if(exercise.difficulty) {%> 
+                                <h6 class="card-title" >Trudność:</h6>
+                                <p class="starability-result" data-rating= <%=exercise.difficulty %>> Trudność: <%=exercise.difficulty %> stars </p>
+                            <% } %>
+                            
+                                <h6 class="card-title ">rozwiązanie:</h5>
+                                <p class="card-text ">$$ <%= exercise.solution %> $$</p>
+                
+                            <br>
+                            <div id="crud" class="btn-group" role="group" aria-label="Basic example">
+                                <form action="/branches/<%=branch._id%>/exercises/<%=exercise._id%>/edit">
+                                    <button class="btn btn-sm btn-info me-1">&#128394; Edytuj</button>
+                                </form>
+        
+                                <form action="/branches/<%=branch._id%>/exercises/<%=exercise._id%>?_method=DELETE" method="POST">
+                                    <button class="btn btn-sm btn-danger me-1">🗑️ Usuń</button>
+                                </form>
+                
+                            </div>
+                        
+                            
+                        </div>
+                    </div>
+                    <% } %> 
+                <% } %>
+                </div>
+            <div class="col-md-8  offset-md-4 mb-5">
+                <nav id="pageNav" aria-label="Page navigation example">
+                    <ul class="pagination">
+                       <%var pages = Math.ceil(branch.exercises.length/5) %> 
+                  
+                       <% if(currentPage==1){  %>
+                        <li class="disabled page-item"><a class="page-link" href="" >Poprzednia</a></li>
+                        <% }else{ %>
+                            <li class="page-item"><a class="page-link" href="/branches/<%=branch._id %>/<%=currentPage-1 %>" >Poprzednia</a></li>
+                        <% } %> 
+                       <% for(var i = 0 ; i<pages ; i++){ %>  
+                            <% if(i==currentPage-1){ %>
+                                <li class="page-item active"><a class="page-link" href="/branches/<%=branch._id %>/<%=i+1 %>" ><%=i+1 %> </a></li>
+                            <% }else{ %>
+                                <li class="page-item"><a class="page-link" href="/branches/<%=branch._id %>/<%=i+1 %>"><%=i+1 %> </a></li>
+                            <% } %>  
+                        <% } %>
+                        <% if(currentPage==pages){  %>
+                            <li class="disabled page-item"><a class="page-link" href="" >Następna</a></li>
+                        <% }else{ %>
+                            <li class="page-item"><a class="page-link" href="/branches/<%=branch._id %>/<%= parseInt(currentPage) + 1 %>" >Następna</a></li>
+                        <% } %>  
+                  
+                    </ul>
+                  </nav>
+            </div>
+       
+        <% } %>
+       
+        </div>
+        
+    </div>
+   
+
+    <style>
+        #exImg {
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border-radius: 5px;
+        }
+        
+    </style>
+    
+    <script>
+      
+        var pageNav = document.getElementById('pageNav')
+        if(pageNav){
+            pageNav.scrollIntoView()
+        }
+        
+        
+    </script>

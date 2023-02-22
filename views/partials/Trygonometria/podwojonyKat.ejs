@@ -1,0 +1,54 @@
+<% layout('layouts/boilerplate') %>
+<link rel="stylesheet" href="/stylesheets/popup.css">
+<link rel="stylesheet" href="/stylesheets/arrows.css">
+<div class="row">
+    <div class="col-10 offset-1">
+        <div class="card mb-5">
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <h2 class="card-title">   Funkcje trygonometryczne podwojonego kąta: </h2>
+                       
+                    </li>
+                    <li class="list-group-item" >
+                        <div class="card-text" >
+                         
+                            <div >
+                                $$sin2α = 2sinαcosα$$
+                                $$cos2α = cos ^2(α) - sin ^2(α)$$
+                                $$cos2α = 2cos^2α - 1$$
+                                <div style="text-align: center;">
+                                    $tg2α-=\frac{2tgα}{1-tg^2α}$&emsp;gdy $tgα$ istnieje i $1-tg^2α ≠ 0$
+                                </div>
+                                
+                            </div>
+                        </div>
+                        
+                    </li>
+                </ul>
+                
+            </div>
+            <div class="card-footer" style="display:inline">
+                <button class="btn" id="next">
+                    <div style="text-align: center;">
+                        <div class="left"></div>
+                    </div>
+                </button>
+                <a href="/branches/<%= branch._id %>/section/sumyRoznice" class="card-link me-3" style="float:right;">
+                    
+                    
+                    <button class="btn" id="next">
+                        <div style="text-align: center;">
+                            <div class="right"></div>
+                        </div>
+                    </button>
+                </a>
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

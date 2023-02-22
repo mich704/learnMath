@@ -1,0 +1,57 @@
+<!-- A button to open the popup form -->
+
+    
+    <!-- Trigger/Open The Modal -->
+    <button id="myBtn"  class="btn btn-success">📝 Wygeneruj test</button>
+   
+    <!-- The Modal -->
+    <div id="myModal" class="modal"  >
+    
+      <!-- Modal content -->
+        <div class="modal-content" id="myForm"  style="width: 35rem; position: relative;" >
+            <span class="close" style="position: relative;">&times;</span>
+            <div class="ms-2 me-2 mt-2 mb-2">
+                <form action="/branches/<%= branch._id %>/tests" method="POST" novalidate class="validated-form">
+                    <h3>Tworzenie testu z działu <%= branch.name  %> </h3>
+                    <div class="form-group required">
+                        <label for="difficulty" class="form-label">Maksymalna trudność zadania:</label>
+                        <fieldset class="starability-basic" id="difficulty" name="difficulty" >
+                            <input type="radio" id="no-rate" class="input-no-rate" name="level" value="0"  aria-label="No rating." />
+                            <input type="radio" id="first-rate1" name="level" value="1" />
+                            <label for="first-rate1" title="Bardzo łatwe">1 star</label>
+                            <input type="radio" id="first-rate2" name="level" value="2" />
+                            <label for="first-rate2" title="Łatwe">2 stars</label>
+                            <input type="radio" id="first-rate3" name="level" value="3" checked/>
+                            <label for="first-rate3" title="Średniozaawansowane">3 stars</label>
+                            <input type="radio" id="first-rate4" name="level" value="4" />
+                            <label for="first-rate4" title="Trudne">4 stars</label>
+                            <input type="radio" id="first-rate5" name="level" value="5" />
+                            <label for="first-rate5" title="Bardzo trudne">5 stars</label>
+                        </fieldset>
+                        
+                    </div>
+                    <div class="form-group">
+                        <label for="exNumber"  class="form-label">Liczba zadań:</label>
+                        <br>
+                        <input type="number" min=1 class="form-control mb-3" name="exNumber" id="exNumber" style="width: auto;" required>
+                    </div>
+                    
+                   
+                    <button type="submit" class="btn btn-success">Stwórz</button>
+                    <button type="button" class="btn btn-danger" id="close" >Zamknij</button>
+                    </form>
+            </div>
+               
+        </div>
+    </div>
+    
+<!-- The form -->
+
+<style>
+    #myModal{
+        z-index: 100;
+    }
+</style> 
+
+
+

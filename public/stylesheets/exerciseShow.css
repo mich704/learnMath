@@ -1,0 +1,35 @@
+
+
+
+div.col-8{
+    display:inline-block;
+    width: 40em;
+}
+
+div#crud{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#desc{
+    width: 100%;
+    min-width: 50%;
+}
+
+div#ex{
+    background-color: #6f9fec;
+    display:inline-block;
+    width: 100%;
+  
+}
+
+#endTest{
+    display: block;
+}
+
+
+
+
+
+
+

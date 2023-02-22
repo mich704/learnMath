@@ -1,0 +1,159 @@
+<% layout('layouts/boilerplate') %>
+
+<% if(login.challenges.length>0){ %> 
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="mt-2" >
+                <% if(pendingChallenges.length>0){ %> 
+                    <div class="card mb-4" style="text-align: center;">
+                        <div class="card-body">
+                            <% var i = 1 %> 
+                                <h3 class="card-title" style="text-align:center;">Rozwiąż dostępne wyzwania!</h3>
+                                <h6 class="text-muted mb-2 ">Gdy wygrasz, zdobędziesz premię równą przewadze nad rywalem</h6>
+                                <hr> 
+                                <% for(let challenge of pendingChallenges){ %> 
+                                    <% var test = challenge.test %> 
+                                    <% var branch = test.branchId %> 
+                                    <% var rival = (challenge.reciever._id.equals(login._id) ? challenge.sender.username :  challenge.reciever.username);  %>
+                                
+                                        <div id="test" class="card" style="text-align:center;">
+                                            <h5 class="card-header"><% if(login && login.role != 'Uczeń'){ %> <a id="testLink" href="/branches/<%=branch._id %>/tests/<%= test._id %>">Podgląd</a><% } else{%>Test <% } %>  </h5>
+                                            <ul class="list-group list-group-flush">
+                                            
+                                                <li class="list-group-item">Rywal: <b><%= rival %></b></li>
+                                                <li class="list-group-item">Liczba zadań: <%= test.exercises.length %></li>
+                                                <li class="list-group-item">Trudność:<p class="starability-result" data-rating= <%=test.level %>>  <%=test.level %> stars </p></li>
+                                                <li class="list-group-item">Gwiazdki do zdobycia: <%=test.maxScore %> </li>
+                                                <li class="list-group-item"><a href="/branches/<%=branch._id %>/tests/<%= test._id %>/solve"><button class="btn btn-success">Rozwiąż test!</button></a>
+                                                <% if(login && login.role != 'Uczeń'){ %>
+                                                    <li class="list-group-item">
+                                                    <form action="/branches/<%=branch._id %>/tests/<%= test._id %>?_method=DELETE" method="POST">
+                                                        <button class="btn btn-danger">Usuń test!</button>
+                                                    </form>
+                                                </li>
+                                                <%}%>    
+                                            </ul>
+                                        </div>
+                                    <% i+=1 %>  
+                                <% } %>
+                            </div>
+                        
+                    </div>
+                <% } %>
+
+
+                <% if(activeChallenges.length>0){ %> 
+                    <div class="card mb-4" style="text-align: center;">
+                        <div class="card-body">
+                            <h3 class="card-title" style="text-align:center;">Wyzwania oczekujące na przeciwnika!</h3>
+                            <% var i = 1 %>
+                                <% for(let challenge of activeChallenges){ %> 
+                                    <% var test = challenge.test %> 
+                                    <% var branch = test.branchId %> 
+                                    <% var rival = (challenge.reciever._id.equals(login._id) ? challenge.sender.username :  challenge.reciever.username);  %> 
+                                    <% var yourPoints = (challenge.reciever._id.equals(login._id) ? challenge.recieverPoints :  challenge.senderPoints);  %> 
+                                     
+                                
+                                        <div id="test" class="card" style="text-align:center;">
+                                            <h5 class="card-header"><% if(login && login.role != 'Uczeń'){ %> <a id="testLink" href="/branches/<%=branch._id %>/tests/<%= test._id %>">Podgląd</a><% } else{%>Test <% } %>  </h5>
+                                            <ul class="list-group list-group-flush">
+                                            
+                                                <li class="list-group-item">Rywal: <b><%= rival %></b></li>
+                                                <li class="list-group-item">Liczba zadań: <%= test.exercises.length %></li>
+                                                <li class="list-group-item">Trudność:<p class="starability-result" data-rating= <%=test.level %>>  <%=test.level %> stars </p></li>
+                                                <li class="list-group-item">Uzyskana ilość punktów: <%=yourPoints%> </li>
+                                                <% if(login && login.role != 'Uczeń'){ %>
+                                                    <li class="list-group-item">
+                                                    <form action="/branches/<%=branch._id %>/tests/<%= test._id %>?_method=DELETE" method="POST">
+                                                        <button class="btn btn-danger">Usuń test!</button>
+                                                    </form>
+                                                </li>
+                                                <%}%>    
+                                            </ul>
+                                        </div>
+                                    <% i+=1 %>  
+                                <%}%>          
+                               
+                           
+                        </div>
+                    </div>
+                <% } %>
+
+
+
+                <% if(doneChallenges.length>0){ %> 
+                    <div class="card mb-4" style="text-align: center;">
+                        <div class="card-body">
+                            <h3 class="card-title" style="text-align:center;">Zakończone wyzwania!</h3>
+                            <% var i = 1 %>
+                                <% for(let challenge of doneChallenges){ %> 
+                                    <% var test = challenge.test %> 
+                                    <% var branch = test.branchId %> 
+                                    <% var rival = (challenge.reciever._id.equals(login._id) ? challenge.sender.username :  challenge.reciever.username);  %> 
+                                    <% var yourPoints = (challenge.reciever._id.equals(login._id) ? challenge.recieverPoints :  challenge.senderPoints);  %> 
+                                    <% var rivalPoints = (challenge.reciever._id.equals(login._id) ? challenge.senderPoints :  challenge.recieverPoints);  %>
+                                    <% var result = yourPoints - rivalPoints %> 
+                                        <div id="test" class="card" style="text-align:center;">
+                                            <h5 class="card-header"><% if(login && login.role != 'Uczeń'){ %> <a id="testLink" href="/branches/<%=branch._id %>/tests/<%= test._id %>">Podgląd</a><% } else{%>Test <% } %>  </h5>
+                                            <ul class="list-group list-group-flush">
+                                                
+                                                <% if(result===0){ %> 
+                                                    <li class="list-group-item">Rezultat: zremisowałeś z <b><%=rival %></b>!</li>
+                                                <% } else if(result>0){ %> 
+                                                    <li class="list-group-item">Rezultat: pokonałeś <b><%=rival %></b>!</li>
+                                                    <% yourPoints+=result %> 
+                                                <% }else{ %>
+                                                    <li class="list-group-item">Rezultat: przegrałeś <b><%=rival %></b>!</li>
+                                                <% } %> 
+                                                <li class="list-group-item">Liczba zadań: <%= test.exercises.length %></li>
+                                                <li class="list-group-item">Trudność:<p class="starability-result" data-rating= <%=test.level %>>  <%=test.level %> stars </p></li>
+                                                <li class="list-group-item">Zdobyte punkty: <%=yourPoints %> </li>
+                                                <% if(login && login.role != 'Uczeń'){ %>
+                                                    <li class="list-group-item">
+                                                    <form action="/branches/<%=branch._id %>/tests/<%= test._id %>?_method=DELETE" method="POST">
+                                                        <button class="btn btn-danger">Usuń test!</button>
+                                                    </form>
+                                                </li>
+                                                <%}%>    
+                                            </ul>
+                                        </div>
+                                    <% i+=1 %>  
+                                <%}%>          
+                          
+                           
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+<% }else{ %>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="mt-2" >
+                <div class="card mb-4" style="text-align: center;">
+                    <div class="card-body">
+                        <h3 class="card-title" style="text-align:center;">W tym panelu pojawi się podsumowanie twoich wyzwań!</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<% } %> 
+    
+
+
+<style>
+    #test{
+        display: inline-flex;
+        margin-top: 0.5rem;
+        margin-bottom: 0.75rem;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: #e9c46a;
+    }
+</style>
+
+<script>
+    
+</script>

@@ -1,0 +1,56 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="row">
+    <div class="col-10 offset-1">
+        <div class="card mb-5">
+            <div class="card-body">
+                
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <h2 class="card-title">Jedynka trygonometryczna:</h2>
+                    </li>
+                    <li class="list-group-item" >
+                       
+                        
+                        <div class="card-text" >
+                            To podstawowa zależność między funkcjami kąta ostrego.
+                            Poniższe równanie pokazuje związek między funkcjami $sin(α)$ oraz $cos(α)$ tego samego kąta:
+                           
+                            $$sin^2(α) + cos^2(α) = 1$$
+                        </div>
+                        Twierdzenie to można udowodnić w prosty sposób:
+                        <div style="text-align: center;">
+                            <img class="card-img-top" src="/images/branches/Trygonometria/sections/trojkatProst.png" alt="" style="max-width: 20rem; max-height: 15rem;">
+                        </div>
+                        $$sin(α)=\frac{a}{c}$$
+                        $$cos(α)=\frac{b}{c}$$
+                        $$sin^2(α) + cos^2(α) = \frac{a^2}{c^2} + \frac{b^2}{c^2}$$
+                        Na mocy twierdzenia Pitagorasa:
+                        $$a^2+b^2=c^2$$
+                        $$sin^2(α) + cos^2(α) = \frac{a^2}{c^2} + \frac{b^2}{c^2} = \frac{c^2}{c^2} = 1$$
+                    </li>
+                    <li class="list-group-item" >
+                        <b class="card-title">Przykład:</b>
+                        <div class="card-text">
+                            Sinus kąta w trójkącie prostokątnym jest równy $\frac{3}{4}$. Wyznacz wartość cosinusa tego kąta.
+                            <br>
+                            <br>
+                            <b>Rozwiązanie:</b>
+                            $$sin^{2}(α) + cos^{2}(α) = 1$$
+                            $$\frac{3^2}{4^2} + cos^{2}(α) = 1$$
+                            $$\frac{9}{16} + cos^{2}(α) = 1$$
+                            $$ cos^{2}(α) = \frac{7}{16}$$
+                            $$ cos(α) = \frac{\sqrt7}{4}$$
+                        </div>
+                        
+                    </li>
+                </ul>
+                
+            </div> 
+            <div class="card-footer">
+                <a href="/branches/<%= branch._id %>/section/trojkatZaleznosci" class="card-link mb-3">Zależności kątów w trókącie</a>
+                <a href="/branches/<%= branch._id %>/section/wartosciFunkcji" class="card-link me-3" style="float:right;">Wartości funkcji dla kątów charakterystycznych</a>
+            </div>   
+        </div>    
+    </div>    
+</div>    

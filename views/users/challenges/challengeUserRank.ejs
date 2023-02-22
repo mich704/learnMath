@@ -1,0 +1,70 @@
+<% layout('layouts/boilerplate') %>
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="mt-2" >
+            <div class="card mb-4">
+            <div class="card-body">
+            <table class="table table-striped">
+            <% if(loginUser.role==='Uczeń'){ %> 
+                
+                <h4 class="card-subtitle mb-2 " style="text-align:center;">Rzuć wyzwanie innemu uczniowi:</h4>
+            <% }else{ %>
+                <h3 class="card-title" style="text-align:center;">Ranking uczniów:</h3>
+            <% } %> 
+            <thead>
+                
+                <tr>
+                <th scope="col">Miejsce</th>
+                <th scope="col">Uczeń</th> 
+             
+                <th scope="col" >
+                    <div class="starability-basic" style="display: inline;">
+                    
+                    <input type="radio" id="rate1" name="rating" value="<%=loginUser.stars %>" />
+                    <label for="rate1" title="<%=loginUser.stars %>"></label>
+                    </div>
+                </th>
+                <% if(loginUser.role==='Uczeń'){ %> 
+                <th scope="col"></th> 
+                <% } %> 
+            
+                </tr>
+            </thead>
+            <tbody>
+                <% students.sort((a,b) => b.stars-a.stars) %> 
+                <% students.forEach(function (student, i){ %> 
+                <%if(student._id.equals( loginUser._id)){%> 
+                    <tr class="table-info">
+                    <th scope="row"><%=i+1 %></th>
+                    <td><%= student.username %></td>
+                    <td><%= student.stars %></td>
+                    <td></td>
+                    </tr>
+                <% }else{%>
+                    <tr>
+                    <th scope="row"><%=i+1 %></th>
+                    <% if(loginUser.role==='Uczeń'){ %> 
+                        <td><%= student.username %></td>
+                    <% }else{ %> 
+                        <td><a href="/users/<%= student._id %>"><%= student.username %></a></td>
+                    <% } %> 
+                    <td><%= student.stars %></td>
+                    <% if(loginUser.role==='Uczeń'){ %> 
+                        <td>
+                            <a href="/users/<%= loginUser._id %>/challenges/<%= student._id %>/newForm">
+                                <button type="button" class="btn btn-danger btn-sm">Wyzwanie</button>
+                            </a>
+                        </td>
+                    <% } %>
+                  
+                    </tr>
+                <% } %>  
+                <% });%>  
+            
+            </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>

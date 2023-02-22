@@ -1,0 +1,55 @@
+<% layout('layouts/boilerplate') %>
+<link rel="stylesheet" href="/stylesheets/popup.css">
+<script src="/js/popup.js"></script>
+
+<div class="row">
+    <div class="col-10 offset-1">
+        <div class="card mb-5">
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <h2 class="card-title">Wzory na funkcje trygonometryczne sumy i różnice kątów:</h2>
+                    </li>
+                    <li class="list-group-item" >
+                       
+                        
+                        <div class="card-text" >
+                            Dla dowolnych kątów <b>α</b> oraz <b>β</b> prawdziwe są równości:
+                            <div style="text-align: center; font-size: 0.85rem;">
+                                $$sin(α+β)=sinα cosβ + sinβ cosα$$
+                                $$sin(α-β)=sinα cosβ - sinβ cosα$$
+                                $$cos(α+β)=cosα cosβ - sinα sinβ$$
+                                $$cos(α-β)=cosα cosβ + sinα sinβ$$
+                            </div>
+                            Ponadto dla funkcji $tg$:
+                            <div style="text-align: center; font-size: 0.85rem;">
+                                <div class="mt-2">
+                                    $tg(α+β)=\frac{tgα+tgβ}{1-tgα \cdot tgβ}$&emsp;gdy&emsp;$α,β,α+β ≠ \frac{π}{2}+kπ$&ensp;oraz $k$ należy do całkowitych
+                                     <div class="popup"  id="tgExists0" onclick="myFunction(this.id)" onmouseover="myFunction(this.id)">
+                                        💡
+                                        <span class="popuptext" id="myPopup1">Warunek ten wynika z kształtu funkcji $tg$, dla tych wielokrotności kąta $\frac{π}{2}$ funkcja nie istnieje </span>
+                                    </div>
+                                </div>
+                               
+                                <br> 
+                                <div class="mb-2">
+                                    $tg(α-β)=\frac{tgα-tgβ}{1+tgα \cdot tgβ}$&emsp;gdy&emsp;$α,β,α-β ≠ \frac{π}{2}+kπ$&ensp;oraz $k$ należy do całkowitych
+                                    <div class="popup" id="tgExists" onclick="myFunction(this.id)" onmouseover="myFunction(this.id)">
+                                        💡
+                                        <span class="popuptext" id="myPopup">Warunek ten wynika z kształtu funkcji $tg$, dla tych wielokrotności kąta $\frac{π}{2}$ funkcja nie istnieje </span>
+                                    </div>
+                                </div> 
+                            </div> 
+                            
+                        </div>
+                    </li>
+                </ul>
+            </div>   
+            <div class="card-footer">
+                <a href="/branches/<%= branch._id %>/section/wartosciFunkcji" class="card-link mb-3" style="float:left;">Wartości funkcji dla kątów charakterystycznych</a>
+                <a href="/branches/<%= branch._id %>/section/podwojonyKat" class="card-link me-3" style="float:right;">Funkcje trygonometryczne podwojonego kąta</a>
+            </div> 
+        </div>    
+    </div>    
+</div>    
+

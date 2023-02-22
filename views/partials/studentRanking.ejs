@@ -1,0 +1,38 @@
+<div class="mt-2" >
+    <table class="table table-striped">
+      <h3 class="card-title" style="text-align:center;">Ranking uczniów:</h3>
+      <thead>
+        
+        <tr>
+          <th scope="col">Miejsce</th>
+          <th scope="col">Uczeń</th>
+          <th scope="col" >
+            <div class="starability-basic" style="display: inline;">
+             
+              <input type="radio" id="rate1" name="rating" value="<%=loginUser.stars %>" />
+              <label for="rate1" title="<%=loginUser.stars %>"></label>
+            </div>
+           </th>
+       
+        </tr>
+      </thead>
+      <tbody>
+        <% students.forEach(function (student, i){ %> 
+          <%if(student._id.equals( loginUser._id)){%> 
+            <tr class="table-info">
+              <th scope="row"><%=i+1 %></th>
+              <td><%= student.username %></td>
+              <td><%= student.stars %></td>
+            </tr>
+          <% }else{%>
+            <tr>
+              <th scope="row"><%=i+1 %></th>
+              <td><%= student.username %></td>
+              <td><%= student.stars %></td>
+            </tr>
+          <% } %>  
+          <% });%>  
+       
+      </tbody>
+    </table>
+  </div>

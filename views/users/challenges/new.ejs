@@ -1,0 +1,123 @@
+<% layout('layouts/boilerplate') %>
+
+
+
+    <div class="card mb-3">
+        <div class="card-body">
+           
+            <h2 class="card-title" style="text-align: center;">Rzuć wyzwanie dla <%= reciever.username %>!</h2>
+            <hr>
+            
+            <h5>Wybierz dział matematyki</h5> 
+            <select id="branchDropdown" class="form-select me-2">
+                <option value="">---</option>
+                <% branches.forEach(branch => { %>
+                    <option value="<%= branch._id %>">
+                        <%= branch.name %>
+                    </option>
+                <% }); %>
+                
+             </select>
+
+            <h5>Wybierz poziom trudności</h5>
+            <select id="levelDropdown" class="form-select">
+                <option value="">---</option>
+                <% for(var i = 1 ; i <= maxChallengeLvl; i++){ %>
+                    <option value="<%= i%>">
+                        <%= i %>
+                    </option>
+                <% }; %>
+            
+            </select>
+            <br>
+
+            <button class="btn btn-success mt-2" id="search">🔍 Szukaj</button>
+    </div>
+    </div>
+
+    
+<link rel="stylesheet" href="/stylesheets/collapsibleTabs.css">
+<script src="/js/collapsibleTabs.js"></script>
+
+    <script>
+        
+        var searchBtn = document.getElementById("search")
+
+        var branchDropdown = document.getElementById("branchDropdown")
+        branchDropdown.addEventListener('change', ()=>{
+            if(searchBtn.style.display === 'none'){
+                searchBtn.style.display = 'block'
+                document.getElementById("testsCards").remove();
+
+            }
+        })
+
+        var levelDropdown = document.getElementById("levelDropdown")
+        levelDropdown.addEventListener('change', ()=>{
+            if(searchBtn.style.display === 'none'){
+                searchBtn.style.display = 'block'
+                document.getElementById("testsCards").remove()
+            }
+        })
+
+     
+        searchBtn.addEventListener('click', async()=>{
+            var levelValue = levelDropdown.value;
+            var levelText = levelDropdown.options[levelDropdown.selectedIndex].text;
+
+            var branchValue = branchDropdown.value;
+            var branchText = branchDropdown.options[branchDropdown.selectedIndex].text;
+            var splitUrl = window.location.href.split('/');
+            var postUrl = splitUrl.slice(0, splitUrl.length-2).join('/')
+            console.log(postUrl)
+            var recieverId = splitUrl[splitUrl.length-2]
+            if(branchValue && levelValue){
+                console.log('call ctrl')
+                const res = await axios.get(window.location.href+`/${branchValue}/${levelValue}/getTests`)
+                var resultTests = res.data
+                console.log(resultTests)
+
+                var testsCards = document.createElement("div");
+                testsCards.id = 'testsCards'
+
+                if(resultTests.length>0){
+                    resultTests.forEach(function(test){
+                        console.log(test._id)
+                        testsCards.innerHTML += 
+                        `<div id="test" class="card me-1">
+                            <h5 class="card-header">Test</h5>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Liczba zadań: ${test.exercises.length}</li>
+                                <li class="list-group-item">Gwiazdki do zdobycia: ${test.maxScore} </li>
+                                <li class="list-group-item">
+                                    <form action="${postUrl}" method="POST" >
+                                        <input type="text" id="recieverId" name="recieverId" value="${recieverId}" style='display:none;'>
+                                        <input type="text" id="testId" name="testId" value="${test._id}" style='display:none;'>
+                                        <button type="submit" class="btn btn-success">Dodaj do wyzwania!</button> 
+                                    </form>
+                                    
+                                </li>
+                            </ul>
+                        </div>`
+                    })
+                }
+                else{
+                    testsCards.innerHTML+=' <div class="text-muted" style="text-align: center;">Brak testów dostępnych do stworzenia wyzwania.</div>'
+                }
+                
+                
+
+                searchBtn.parentNode.insertBefore(testsCards, searchBtn.nextSibling);
+                searchBtn.style.display = 'none'
+            }
+        })
+    </script>
+
+<style>
+    #test{
+        display: inline-flex;
+        margin-top: 0.5rem;
+        margin-bottom: 0.75rem;
+        background-color: #e9c46a;
+    }
+</style>

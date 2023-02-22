@@ -1,0 +1,16 @@
+<% layout('layouts/boilerplate') %>
+    <p id="zadania">
+        <h2>Zadania:</h2>
+        <ul>
+            <% if(branch.exercises){ %>    
+                <% for( let ex of branch.exercises ) { %>
+                    <li><%=ex %> 
+                        <form action="/<%= ex._id %>/edit">
+                            <button>&#128394; Edytuj</button>
+                        </form>
+                    </li>
+                <% } %>
+            <% } %>
+        </ul>
+    </p>
+    <a href="/branches/<%= branch._id %>">Strona główna działu  <%= branch.name %> </a>

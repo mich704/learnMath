@@ -1,0 +1,136 @@
+<% layout('layouts/boilerplate') %>
+
+<h2>Dodaj zadanie do działu <%= branch.name %> !</h2>
+<div class="col-4 offset-8 me-2">
+    <%- include('../partials/mathKeyboard') %> 
+</div>
+
+
+<form action="/branches/<%= branch._id %>/exercises" enctype="multipart/form-data" method="POST" novalidate class = "mb-3 validated-form" >
+    <div class="col-8 offset-0 mb-5" >
+        <div id="formDiv" class="card">
+            <div class="card-body " >
+                <label for="description">Treść zadania:</label>
+                <textarea id="math-field0-input" class="form-control" name="exercise[description]" id="description" cols="30" rows="3" style="display: none" required> </textarea>
+                    <span id="math-field0" class="card  mb-1" aria-label="0"  style="width: 100%; height: 9rem; display: block;" onclick='setFocusedSpan(this.id)'>
+                </span>
+                    
+             
+                <hr>
+                <label for="image" class="form-label ">Załącz obraz (opcjonalnie):</label>
+                <br>
+                <input class="file"  type="file" class="form-input  ms-4 me-3 mb-2"  accept="image/jpeg, image/png, image/jpg" id="image" name="image"></input>
+                <button id="deleteImg" style="display: none;" class="btn btn-sm btn-danger me-1">🗑️ Usuń obraz</button>
+                <div id="display-image" class="card form-control ms-3 mt-3 me-3 mb-3" style="width: auto;"></div>
+                
+                <hr>
+                <div >
+                    <label for="difficulty" class="form-label ms-3 me-3">Trudność zadania (1-bardzo łatwe, 5-bardzo trudne)</label>
+                    <fieldset class="starability-basic ms-3 me-3" >
+                        <input type="radio" id="no-rate" class="input-no-rate" name="exercise[difficulty]" value="0"  aria-label="No rating." />
+                        <input type="radio" id="first-rate1" name="exercise[difficulty]" value="1" />
+                        <label for="first-rate1" title="Bardzo łatwe">1 star</label>
+                        <input type="radio" id="first-rate2" name="exercise[difficulty]" value="2" />
+                        <label for="first-rate2" title="Łatwe">2 stars</label>
+                        <input type="radio" id="first-rate3" name="exercise[difficulty]" value="3" checked/>
+                        <label for="first-rate3" title="Średniozaawansowane">3 stars</label>
+                        <input type="radio" id="first-rate4" name="exercise[difficulty]" value="4" />
+                        <label for="first-rate4" title="Trudne">4 stars</label>
+                        <input type="radio" id="first-rate5" name="exercise[difficulty]" value="5" />
+                        <label for="first-rate5" title="Bardzo trudne">5 stars</label>
+                  </fieldset>
+                </div>            
+                <hr>
+                <label for="answers" class="form-label ms-3 me-3">Dodaj możliwe odpowiedzi:</label>
+                <div class="ms-3 me-3 mb-2" name="answers" id="possibleAnswers">
+                    <div>
+                        A
+                        <span id="math-field1" class="card mq-math-mode mb-2" aria-label="A"  style="width: 100%; display: block;" onclick='setFocusedSpan(this.id)'>
+                        </span>
+                    </div>
+                    <div>
+                        B
+                        <span id="math-field2" class= "card mq-math-mode mb-2" placeholder="B"  style="width: 100%; display: block;" onclick='setFocusedSpan(this.id)'>
+                        </span>
+                    </div>
+                    <div>
+                        C
+                        <span id="math-field3" class="card mq-math-mode mb-2" placeholder="C" aria-describedby="basic-addon1" style="width: 100%; display: block;" onclick='setFocusedSpan(this.id)'>
+                        </span>
+                    </div>
+                    
+                    <div>
+                        D
+                        <span id="math-field4" class="card mq-math-mode" style="width: 100%; display: block;" onclick='setFocusedSpan(this.id)'>
+                        </span>
+                    </div>
+                    
+
+                    <input id="math-field1-input" type="text" class="form-control" name="exercise[answers]" placeholder="A" style="display: none" aria-describedby="basic-addon1" style="visibility: none" required>
+                    <input id="math-field2-input" type="text" class="form-control" name="exercise[answers]" placeholder="B" style="display: none" aria-describedby="basic-addon1" style="visibility: none" required>
+                    <input id="math-field3-input" type="text" class="form-control" name="exercise[answers]" placeholder="C" style="display: none" aria-describedby="basic-addon1" style="visibility: none" required>
+                    <input id="math-field4-input" type="text" class="form-control" name="exercise[answers]" placeholder="D" style="display: none" aria-describedby="basic-addon1" style="visibility: none" required>
+                </div>
+                <div style="text-align: center;">
+                    <button type="button"  class="btn btn-info mb-3 " id="addAnswers" onclick="chooseAnswerMenu();"  style="width: 10em; margin-left: auto;
+                    margin-right: auto; ">Zatwierdź</button>
+                </div>
+                
+                <div class="mr-3" id="correctAnswer" style="display: none;" >
+                    <label>Dodaj rozwiązanie:</label>
+                    
+                </div>
+
+                
+                
+                <button id="saveBtn" class="btn btn-success mb-4" style=" margin-left: auto;
+                margin-right: auto; position: static; display: none">Zapisz</button>
+            </div>    
+        </div>
+    </div>
+    
+</form>
+
+<style>
+    @media (max-width:868px) {
+        #display-image {
+            max-width: 600px;
+            margin: auto;
+        }
+    }
+    #display-image{
+        width: 200px;
+        height: 200px;
+        margin: 3px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    #saveBtn{
+        width: 5rem;
+    }
+    
+</style>
+
+<script>
+    const image_input = document.querySelector("#image");
+    const deleteImg = document.getElementById("deleteImg");
+    image_input.addEventListener("change", function() {
+        const reader = new FileReader();
+        reader.addEventListener("load", () => {
+            const uploaded_image = reader.result;
+            document.querySelector("#display-image").style.backgroundImage = `url(${uploaded_image})`;
+            deleteImg.style.display = 'initial';
+        });
+        reader.readAsDataURL(this.files[0]);
+    });
+
+    deleteImg.addEventListener('click', ()=>{
+        document.querySelector("#display-image").style.backgroundImage = ``;
+        image_input.value = ''
+        deleteImg.style.display = 'none';
+    })
+</script>
+
+

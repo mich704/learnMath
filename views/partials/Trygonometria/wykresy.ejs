@@ -1,0 +1,48 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="row">
+    <div class="col-10 offset-1">
+        <div class="card mb-5">
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <h2 class="card-title">Wykresy funkcji trygonometrycznych:</h2>
+                    </li>
+                    <li class="list-group-item" >
+                       
+                        
+                        <div class="card-text" >
+                            Wykres funkcji <b>sinus</b>:
+                            <div style="text-align: center;">
+                                <img class="card-img-top" src="/images/branches/Trygonometria/sections/wykresSinus.png" alt="" style="max-width: 20rem; max-height: 15rem;">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item" >
+                        <div class="card-text" >
+                            Wykres funkcji <b>cosinus</b>:
+                            <div style="text-align: center;">
+                                <img class="card-img-top" src="/images/branches/Trygonometria/sections/wykresCosinus.png" alt="" style="max-width: 20rem; max-height: 15rem;">
+                            </div>
+                        </div>
+                        
+                    </li>
+                    <li class="list-group-item" >
+                        <div class="card-text" >
+                            Wykres funkcji <b>tangens</b>:
+                            <div style="text-align: center;">
+                                <img class="card-img-top" src="/images/branches/Trygonometria/sections/wykresTangens.png" alt="" style="max-width: 20rem; max-height: 15rem;">
+                            </div>
+                        </div>
+                        
+                    </li>
+                </ul>
+               
+            </div>  
+            <div class="card-footer">
+                <a href="/branches/<%= branch._id %>/section/wartosciFunkcji" class="card-link mb-3" style="float:left;">Wartości funkcji dla kątów charakterystycznych</a>
+                <a href="/branches/<%= branch._id %>/section/sumyRoznice" class="card-link me-3" style="float:right;">Funkcje trygonometryczne sumy i różnicy kątów</a>
+            </div>  
+        </div>    
+    </div>    
+</div>    

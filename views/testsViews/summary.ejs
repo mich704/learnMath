@@ -1,0 +1,75 @@
+<% layout('layouts/boilerplate') %>
+
+
+
+
+
+<% var index=0  %>
+
+<div class="container mb-3" id="TEST">  
+        <div class="card mb-3">
+            <div class=" card-body  mb-3 ms-3">
+                <h1>Podsumowanie testu:</h1>
+                <% var value=solved.result.points/solved.result.maxScore %> 
+                <h3>Końcowa ocena za ten test:  <%= solved.result.points %>/<%= solved.result.maxScore %>, to <%= (value*100.0).toFixed(2) %>%  </h3>
+            </div>
+        </div> 
+        <% for( let exercise of solved.test.exercises ) { %>
+            <div id="ex" class="card mb-3 " type="ex">
+                <div class="mb-3 ms-3 card-body">
+                    <h4 class="card-title">Treść zadania:</h4>
+                    <p class="card-text  mb-2">                            
+                        $<%= exercise.description %>$ 
+                    </p>
+                    <h6 class="card-title" >Twoja odpowiedź:</h6>
+                    <ul id="answers<%=index  %>">
+                   
+                     <% for( let a of exercise.answers ) { %>
+                        <div class="form-check ">
+                            <% var indexSolution = a  %> 
+                            <input class="form-check-input" type="radio" name="answers[<%=index  %>]" id="answers[<%=index%>]" <%=  a===solved.result.answers[index] ? "checked" : "" %> disabled>
+                            <label class="form-check-label" for="answers[<%=index%>]" disabled>
+                                $<%= a%>$
+                            
+                            </label>
+                        </div>                         
+                    <% } %>
+                    </ul>
+                    
+                    
+                    <% if(exercise.difficulty) {%> 
+                        <h6 class="card-title" >Trudność:</h6>
+                        <p class="starability-result" data-rating= <%=exercise.difficulty %>> Trudność: <%=exercise.difficulty %> stars </p>
+                    <% } %>
+                    <span id="msg<%=index %>" style="display: inline-flex;">
+                        <% if(solved.result.summary[index] == 'źle') {%>
+                            <span class='alert alert-danger' id='error'>&#10005 Poprawna odpowiedź:
+                              $ <%= exercise.solution %> $
+                            </span>
+                        <% }else{ %>
+                            <span class='alert alert-success' id='success'>&#10003</span>
+                        <% } %> 
+                       
+                    </span>
+
+                    
+                
+                
+                    
+                </div>
+            </div>
+            <% index+=1 %> 
+        <% } %>
+    
+</div>
+
+<script>
+    // function disableBack() { 
+    //     window.history.forward()
+    // }
+
+    // window.onload = disableBack();
+    // window.onpageshow = function(evt) { if (evt.persisted) disableBack() }
+</script>
+
+<link rel="stylesheet" href="/stylesheets/exerciseShow.css">

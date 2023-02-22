@@ -1,0 +1,42 @@
+<link rel="stylesheet" href="/stylesheets/exerciseShow.css">
+<% layout('layouts/boilerplate') %>
+
+<a href="<%= currentUrl.replace( test._id ,'')%>">
+    <button class="btn btn-warning mb-2" id="panel"> ↩️ Powrót do panelu postępu</button>
+</a>
+
+<% for( let exercise of test.exercises ) { %>
+    <div id="ex" class="card mb-3 ">
+        <div class="mb-3 ms-3 card-body">
+            <h4 class="card-title">Treść zadania:</h4>
+            <p class="card-text  mb-2">                            
+                $<%= exercise.description %>$ 
+            </p>
+            <h6 class="card-title" >Odpowiedzi:</h6>
+            <ul id="answers">
+            <% for( let a of exercise.answers ) { %>
+
+                <li>$<%= a %>$</li>
+            <% } %>
+            </ul>
+            <% if(exercise.difficulty) {%> 
+                <h6 class="card-title" >Trudność:</h6>
+                <p class="starability-result" data-rating= <%=exercise.difficulty %>> Trudność: <%=exercise.difficulty %> stars </p>
+            <% } %>
+                <!-- <h6 class="card-title ">rozwiązanie:</h5>
+                <p class="card-text ">$$ <%= exercise.solution %> $$</p> -->
+            <br>
+           
+           
+            
+        </div>
+    </div>
+<% } %>
+
+<style>
+   
+</style>
+
+<script>
+   
+</script>

@@ -1,0 +1,16 @@
+<div id="test" class="card">
+    <h5 class="card-header"><% if(loginUser && loginUser.role != 'Uczeń'){ %> <a id="testLink" href="/branches/<%=branch._id %>/tests/<%= test._id %>">Podgląd</a><% } else{%>Test <% } %>  </h5>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">Liczba zadań: <%= test.exercises.length %></li>
+        <li class="list-group-item">Trudność:<p class="starability-result" data-rating= <%=test.level %>>  <%=test.level %> stars </p></li>
+        <li class="list-group-item">Gwiazdki do zdobycia: <%=test.maxScore %> </li>
+        <li class="list-group-item"><a href="/branches/<%=branch._id %>/tests/<%= test._id %>/solve"><button class="btn btn-success">Rozwiąż test!</button></a>
+        <% if(loginUser && loginUser.role != 'Uczeń'){ %>
+            <li class="list-group-item">
+            <form action="/branches/<%=branch._id %>/tests/<%= test._id %>?_method=DELETE" method="POST">
+                <button class="btn btn-danger">Usuń test!</button>
+            </form>
+        </li>
+        <%}%>    
+    </ul>
+</div>

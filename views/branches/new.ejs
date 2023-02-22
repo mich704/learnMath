@@ -1,0 +1,25 @@
+<% layout('layouts/boilerplate') %>
+<div class="row">
+    <h1 class="text-center">Stwórz nowy dział!</h1>
+    <div class="col-6 offset-3">
+        <form action="/branches" method="POST" novalidate  class="validated-form" >
+            <div>
+                <div class="mb-3">
+                    <label class="form-label" for="name">Nazwa</label>
+                    <input class="form-control" type="text" id="name" name="branch[name]" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label"  for="description">Opis</label>
+                    <textarea class="form-control" id="description" name="branch[description]" required></textarea>
+                </div>
+                
+            </div>
+            <button class="btn btn-success">Dodaj dział</button>
+        </form>
+        <a href="/branches">Strona działów</a>
+    </div>
+</div>
+
+    
+    

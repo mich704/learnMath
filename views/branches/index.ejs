@@ -1,0 +1,19 @@
+<% layout('layouts/boilerplate') %>
+    <div class="card mb-3">
+        <div class="card-body">
+            <h1 class="card-title">Wybrierz dział matematyki:</h1>
+            <ul class="list-group list-group-flush">
+                
+                <% for( let branch of branches ) { %>
+                   <li class="list-group-item">
+                     <a href="/branches/<%=branch._id%>" style="text-decoration: none;"><h3><%= branch.name %></h3> </a>
+                    </li>
+                <% } %>
+            </ul>
+            <% if(loginUser && loginUser.role !=='Uczeń') {%>  
+            <a href="/branches/new">Dodaj dział</a>
+            <% } %> 
+           
+        </div>
+    </div>
+    

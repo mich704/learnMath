@@ -1,0 +1,40 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="row">
+    <div class="col-10 offset-1">
+        <div class="card mb-5">
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <h2 class="card-title">Zależności miarowe w trójkącie prostokątnym</h2>
+                    </li>
+                    <li class="list-group-item" >
+                        <div class="card-text">
+                            Poniższy rysunek prezentuje definicje wzorów funkcji trygonometrycznych, wyrażonych za pomocą stosunków długościkrawędzi trójkąta prostokątnego:
+                        </div>
+                        <div style="text-align: center;">
+                            <img class="card-img-top" src="/images/branches/Trygonometria/sections/wzory-trygonometryczne.png" alt="" style="max-width: 20rem; max-height: 15rem;">
+                        </div>
+                       
+                        Po wyprowadzeniu wzoru na krawędzie a i b:
+                     
+                        $$a=c \cdot sin(α)$$
+                        $$b=c \cdot cos(α)$$
+
+                        Możliwe jest wyrażenie funkcji tangens za pomocą $sin(α)$ oraz $cos(α)$:
+                        $$tg(α)=\frac{a}{b}=\frac{c \cdot sin(α)}{c \cdot cos(α)}=\frac{sin(α)}{cos(α)}$$
+                        Powyższa zależność zachodzi jedynie dla kątów spełniających podany warunek:
+                        <div class="mt-2 mb-2" style="text-align: center;">$α ≠ \frac{π}{2}+kπ$, dla całkowitej liczby k</div> 
+                        Jako, że $ctg(α)=\frac{1}{tg(α)}$ wzór ten możemy wyrazić również w taki sposób:
+                        $$ctg(α)=\frac{cos(α)}{sin(α)}$$
+                    </li>
+                </ul>
+
+            </div>  
+            <div class="card-footer" style="display:inline">
+                <a href="#" class="card-link mb-3">Card link</a>
+                <a href="/branches/<%= branch._id %>/section/jedynkaTryg" class="card-link me-3" style="float:right;">Jedynka trygonometryczna</a>
+            </div>  
+        </div>    
+    </div>    
+</div>    

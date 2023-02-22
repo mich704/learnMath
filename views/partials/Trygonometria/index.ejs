@@ -1,0 +1,55 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="row">
+    <div class="col-10 offset-1">
+        <div class="card mb-5">
+            <div class="card-body">
+                <h2 class="card-title">Wybrierz zaganienie, jakie chciałbyś poznać:</h2>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <details><summary><a href="/branches/<%= branch._id %>/section/trojkatZaleznosci">Zależności miarowe kątów w trójkącie prostokątnym</a></summary>
+                            <p class="card-text">opis</p>
+                        </details>
+                    </li>
+                    <li class="list-group-item">
+                        <details>
+                            <summary><a href="/branches/<%= branch._id %>/section/jedynkaTryg">Jedynka trygonometryczna</a></summary>
+                            <p class="card-text">opis</p>
+                        </details>
+                    </li>
+                    <li class="list-group-item">
+                        <details><summary><a href="/branches/<%= branch._id %>/section/wartosciFunkcji">Wartości funkcji kątów charakterystycznych</a></summary>
+                            <p class="card-text">opis</p>
+                        </details>
+                    </li>
+                    <li class="list-group-item">
+                        <details><summary><a href="/branches/<%= branch._id %>/section/wykresy">Wykresy funkcji trygonometrycznych</a></summary>
+                            <p class="card-text">opis</p>
+                        </details>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    summary{
+        font-size: large;
+    }
+</style>
+
+<script>
+   
+
+    $("details").on({
+    mouseenter: function () {
+        //stuff to do on mouse enter
+        $(this).attr('open', true);
+    },
+    mouseleave: function () {
+        //stuff to do on mouse leave
+        $(this).attr('open', false);
+    }
+});
+</script>

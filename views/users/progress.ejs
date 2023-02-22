@@ -1,0 +1,12 @@
+<% layout('layouts/boilerplate') %> 
+<div class="card">
+    <div class="card-body">
+        <h1 class="card-title">Kliknij dział, by sprawdzić swoje postępy:</h1>
+        <ul class="list-group list-group-flush">
+            <% for( let branch of branches ) { %>
+                <li class="list-group-item"> <h3><a href="/users/<%=loginUser._id %>/progress/<%=branch._id%>" style="text-decoration: none;"><%= branch.name %></a> </h3> </li>
+            <% } %>
+        </ul>
+    </div>
+ 
+</div>

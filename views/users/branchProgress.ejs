@@ -1,0 +1,109 @@
+<% layout('layouts/boilerplate') %>
+
+
+<% if(loginUser && loginUser.solvedTests.length > 0) {%> 
+    <div class="card mb-3">
+        <div class="card-body">
+            <h2 class="card-title">Śledź swoje postępy w dziale <a href="/branches/<%=branch._id%>"><%= branch.name %></a>!</h2>
+            <hr>
+           
+    
+                <div class="starability-basic" style="vertical-align: baseline;">
+                    <p style="display: inline-flex; font-size:1.8rem;"><%=loginUser.stars %></p>
+                    <input type="radio" id="rate1" name="rating" value="<%=loginUser.stars %>" />
+                    <label for="rate1" title="<%=loginUser.stars %>"></label>
+                </div> 
+        </div>
+    </div>
+
+        <% for(let l=1 ; l<=5 ; l++){ %> 
+            <%var pointsOnLevel =  loginUser.levelPoints[l-1].points  %> 
+    
+        
+            <% var isBlocked = ((loginUser.stars < l * 10 && loginUser.role === 'Uczeń') ? 'blocked' : 'unblocked') %> 
+            <% if(l==1){ isBlocked='unblocked'} %> 
+               
+                <div id="<%=isBlocked %>"  class="collapsible mt-2">
+                    <h4>Poziom</h4>
+                    <div id="overlay">
+                        <p class="starability-result" data-rating= <%=l %>>  <%=l %> stars</p>
+    
+                   
+                        <div class="container">
+                            <div class="row">
+                                <% if( isBlocked==='blocked'){ %> 
+                                    <div class="col-xs-3">Brakująca ilość gwiazdek: <%= l * 10 - loginUser.stars %> </div>
+                                <% } %> 
+                               
+                                <div class="col-xs-8">
+                                    <%var percent = pointsOnLevel/(l * 10+10)*100 %> 
+                                    
+                                    <div class="progress mt-2">
+                                        
+                                        <!-- <div class="progress-bar" role="progressbar" style=<%= 'width:'+ percent + '%' %> aria-valuenow="25" aria-valuemin="0" aria-valuemax="<%= l*1  %> "></div> -->
+                                        <div class="progress-bar" role="progressbar" style="width: <%=percent%>%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="<%= l*1  %> "></div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+          
+           
+            
+            <div id="<%=isBlocked %>" class= "content" style="text-align: center;">
+                
+              
+                <% solvedOnBranch.forEach(function (solvedTest, i){%>
+                   
+                    <% if(solvedTest.test.level === l ){ %> 
+                        <div id="test" class="card mb-3 ">
+            
+                            <ul class="list-group list-group-flush">
+                              <li id="testItem" class="list-group-item">Wynik: <%= (solvedTest.result.points) %></li>
+                              <li id="testItem" class="list-group-item ">Trudność:<p class="starability-result" data-rating= <%=solvedTest.test.level %>>  <%=solvedTest.test.level %> stars </p></li>
+                              <li id="testItem" class="list-group-item ">Dział:  <%=solvedTest.test.branchId.name%></li>
+                              <li id="testItem" class="list-group-item"><a href="/branches/<%=solvedTest.test.branchId._id%>/tests/<%= solvedTest.test._id %>/solve/<%= solvedTest._id %>/summary"><button class="btn btn-info" style="width: 12rem;">🔍 Podgląd próby</button></a></li>
+                              <li id="testItem" class="list-group-item"><a href="/branches/<%=solvedTest.test.branchId._id%>/tests/<%= solvedTest.test._id %>/solve"><button class="btn btn-success" style="width: 12rem;">🔁 Rozwiąż ponownie</button></a></li>
+                            </ul>
+                    
+                        </div>
+                    <% } %> 
+                <% }); %> 
+            </div>
+        
+    <% } %> 
+<%} else { %>
+  <div class="col">
+    <div class="card mb-4  align-items-center">
+      <div class="card-body text-center">
+        Rozwiąż testy aby rozpocząć swój postęp!
+      </div>
+    </div>
+  </div>
+<% }%>
+ 
+
+
+<style>
+    /* #tests div:nth-of-type(even){
+      class: card mb-3 me-1;
+    } */
+
+    #test{
+      display: inline-flex;
+
+    }
+    #testItem{
+      background-color: #fadb6f;
+    }
+   
+ 
+</style>
+
+
+<link rel="stylesheet" href="/stylesheets/collapsibleTabs.css">
+
+<script src="/js/collapsibleTabs.js"></script>

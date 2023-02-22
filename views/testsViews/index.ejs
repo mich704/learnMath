@@ -1,0 +1,58 @@
+<% layout('layouts/boilerplate') %>
+
+
+
+<div class="card mb-3">
+    <div class="card-body">
+        <h2 class="card-title">Wybierz trudność testu, następnie spróbuj rozwiązać test z działu <a href="/branches/<%=branch._id%>"><%= branch.name %></a></h2>
+        <hr>
+        <% if(loginUser && loginUser.role !=='Uczeń') {%>  
+            
+            <div id="panel">
+
+                <h6 class="card-subtitle mb-2 text-muted"> Panel nauczyciela </h6>
+                <%- include('../testsViews/new') %>
+            </div>
+           
+        <% } %> 
+
+          
+    </div>
+</div>
+
+<% for(let l=1 ; l<=5 ; l++){ %> 
+        <%var pointsOnLevel =  loginUser.levelPoints[l-1].points  %> 
+
+    
+        <% var isBlocked = ((loginUser.stars < l * 10 && loginUser.role === 'Uczeń') ? 'blocked' : 'unblocked') %> 
+        <% if(l==1){ isBlocked='unblocked'} %> 
+           
+            <div id="<%=isBlocked %>"  class="collapsible mt-2">
+                <h4>Poziom</h4>
+                <div id="overlay">
+                    <p class="starability-result" data-rating= <%=l %>>  <%=l %> stars</p>
+
+               
+                    
+                </div>
+                
+            </div>
+      
+       
+        
+        <div id="<%=isBlocked %>" class= "content" style="text-align: center;">
+            
+            
+            <% branch.tests.forEach(function (test, i){%>
+                <% if(test.level === l){ %> 
+                    <%- include('./testCard.ejs', {branch: branch, loginUser: loginUser, test: test, i:i}) %>
+                <% } %> 
+            <% }); %> 
+        </div>
+    
+<% } %> 
+
+
+<link rel="stylesheet" href="/stylesheets/collapsibleTabs.css">
+
+<script src="/js/collapsibleTabs.js"></script>

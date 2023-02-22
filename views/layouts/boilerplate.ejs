@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathTutor</title>
+   
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          extensions: ["tex2jax.js"],
+          jax: ["input/TeX", "output/HTML-CSS"],
+          tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true
+          },
+          "HTML-CSS": { availableFonts: ["STIX"], preferredFont: "STIX", webFont:"STIX-Web", matchFontHeight: true,
+          linebreaks: {  automatic: true, width: "container"}  
+          }
+        });
+      </script>
+      
+      <script type="text/javascript" src="/js/external/mathJaxConfig.js"></script>
+    
+    <link rel="stylesheet" href="/stylesheets/external/mathquill.css" />
+    <script type="text/javascript" src="/js/external/jquery-1.7.1.min.js"></script>
+    <link href="/stylesheets/external/bootstrap.css" rel="stylesheet" >
+    <!-- <script type="module" src="/js/detectMath.js"></script> -->
+    <link rel="stylesheet" href="/stylesheets/stars.css">
+    <script src="/js/external/mathquill.js"></script>
+    
+    
+</head>
+
+<body class="d-flex flex-column vh-100">
+    <%- include('../partials/navbar') %>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <main class="container mt-3 mb-3">
+        <%- include('../partials/flashAlerts') %>
+        <%- body %>
+    </main>         
+    <!-- JavaScript Bundle with Popper -->
+    <link rel="stylesheet" href="/stylesheets/newTestForm.css">
+    <script src="/js/newTestForm.js"></script>
+    
+    <script src="/js/external/bootstrap.bundle.js"></script>
+    <script src="/js/mathKeyboardEngine.js"></script> 
+    
+    <script src="/js/validateForms.js"></script>
+    <!-- <script src="/js/solveTestForm.js"></script> -->
+    <script src="/js/radioForm.js"></script> 
+    
+    
+    
+    <%- include('../partials/footer') %> 
+    
+    
+   
+</body>
+</html>
+
+<script>
+  
+  window.addEventListener("load", async() => {
+      var noti = document.getElementById('bubble')
+      const res = await axios.get(`/getPendingChallengesNumber`)
+      var pendingChallenges = res.data
+      var splitUrl = window.location.href.split('/');
+      if(!pendingChallenges){
+          noti.style.display = 'none'
+      }
+      else {
+          noti.style.display = ''
+          console.log(noti)
+          noti.innerHTML = pendingChallenges
+      }
+      console.dir(pendingChallenges )
+  });
+    
+</script>
+
+
+<style>
+  body {
+      background-image: url('/images/backgrounds/pngTree1.png');
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+      position: relative;
+      background-attachment: fixed;
+      margin-top: 4rem;
+  }
+  </style>
+
