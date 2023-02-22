@@ -42,8 +42,6 @@ router.get('/:userId',isLoggedIn, async(req, res)=>{
     .sort({'stars':-1})
     .select(['email','username','stars'])
 
-    console.log(students)
-    //console.log("ŁÓOOOT ",loginUser)
     res.render('users/profile', {loginUser, urlUser, students})
 })
 
@@ -51,7 +49,6 @@ router.get('/:userId/progress', isLoggedIn, async(req, res)=>{
     const branches = await Branch.find({});
     res.render('users/progress', {branches})
 })
-
 
 
 router.get('/:userId/progress/:branchId',isLoggedIn, async(req, res)=>{
@@ -96,8 +93,6 @@ router.get('/:userId/progress/:branchId',isLoggedIn, async(req, res)=>{
     }   
    
     const urlUser = await User.findById(req.params.userId).populate('tests solvedTests', 'test exercises');
-    //res.send('BRANCH PROGRESS')
-    console.log('solvedOnBranch', solvedOnBranch)
     res.render('users/branchProgress', {loginUser, branch, solvedOnBranch})
 });
 

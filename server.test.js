@@ -1,48 +1,12 @@
-var request = require('supertest');
-var server = request.agent('http://localhost:3000');
-var should = require('should');
+
 
 const mongoose = require('mongoose');
-const {MongoClient} = require('mongodb');
-const app = require('./app');
+
 
 const Exercise = require('./models/exercise');
 const Test = require('./models/testModel');
 const Challenge = require('./models/challenge');
 const DB = 'mongodb://localhost:27017/mathApp'
-
-var ObjectId =mongoose.Schema.Types.ObjectId;
-
-
-// describe('Test insert', () => {
-//     let connection;
-//     let db;
-  
-//     beforeAll(async () => {
-//       connection = await MongoClient.connect(DB, {
-//         useNewUrlParser: true,
-//         useUnifiedTopology: true
-//       });
-
-//       db = await connection.db('mathApp');
-//     });
-  
-    
-  
-//     test('should insert a doc into collection', async () => {
-//       const users = db.collection('users');
-  
-//       const mockUser = {_id: 'test', username: 'John'};
-//       await users.insertOne(mockUser);
-  
-//       const insertedUser = await users.findOne({_id: 'test'});
-//       expect(insertedUser).toEqual(mockUser);
-//       await users.deleteOne(insertedUser)
-
-//     });
-
-// });
-
 
 describe('Test Exercise Model', () => {
     let connection;
@@ -64,7 +28,7 @@ describe('Test Exercise Model', () => {
         expect(newExercise._id).toBeDefined()
         await Exercise.deleteOne(newExercise)
     })
-    //jest.setTimeout(10000) 
+   
     test('should fail to create exercise without required solution field', async () => {
         let err
         try{
@@ -200,21 +164,4 @@ describe('Testing Challenge Model', () => {
         await mongoose.connection.close()
     });
 });
-
-
-// describe("POST /users", ()=>{
-
-//     test("login test should PASS", async()=>{
-//         server
-//         .post('/login')
-//         .send({username:'uczaseń', password: '123'})
-//         .end( (err, res)=> {
-//            resolve(res.body)
-//         })
-         
-//     });
-   
-   
-
-// })
 

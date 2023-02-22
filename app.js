@@ -22,7 +22,6 @@ const usersRoutes = require('./routes/usersRoutes');
 const challengesRoutes = require('./routes/challengesRoutes');
 
 const ROLES =  require('./utils/roles');
-const {getPendingChallengesNumber} = require('./controllers/axiosTest')
 
 app.engine('ejs', ejsMate)
 app.set('views', path.join(__dirname, 'views'));
@@ -80,16 +79,12 @@ app.get('/getPendingChallengesNumber', async(req, res)=>{
         var func = eval(name)(res.locals.loginUser)
         console.log(res.locals.loginUser.username)
         var x = await func
-        console.log('xd', x)
         return res.send(JSON.stringify(x))
     }
-
 })
 
 
 app.get('/', (req, res)=>{
-    //res.send(parser.latexParser.parse("hello \\author[opt]{name}"))
-   
     res.render('home')
 })
 
@@ -102,7 +97,6 @@ app.all('*', (req, res, next)=>{
 app.use((err, req, res, next)=>{
     const {statusCode = 500} =  err;
     if(err.message == null) err.message = "Coś poszło nie tak!" 
-    
     res.status(statusCode).render('error', {err})
 })
 

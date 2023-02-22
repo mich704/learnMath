@@ -1,140 +1,146 @@
 <% layout('layouts/boilerplate') %>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<h1>Rozwiąż test!</h1>
-<div class="row">
-    <div id="timeToSolve" style="display: none;"><%= timeToSolve %></div>
-    <div class="col-4 offset-8">
-        <%- include('../partials/testTimer') %> 
-    </div> 
-
-    <% var index=0  %>
-    <div class="col-10 offset-0 ml-auto">
-        <div class="container" id="TEST">   
-            <form id="testForm"  action="/branches/<%=branch._id %>/tests/<%= test._id %>/solve/<%=solvedId%>" method="POST"  class="mb-5 ">
-                <% for( let exercise of test.exercises ) { %> 
-                    <div id="ex" class="card mb-3 " type="ex">
-                        <div class=" ms-3 card-body">
-                            <h4 class="card-title">Treść zadania:</h4>
-                            <p class="card-text  mb-2">                            
-                                $<%= exercise.description %>$ 
-                            </p>
-                            <hr>
-                            <h6 class="card-title" >Wybierz odpowiedź:</h6>
-                            <ul id="answers<%=index  %>">
-                            <% for( let a of exercise.answers ) { %>
-                                <div class="form-check ">
-                                    <% var indexSolution = a  %> 
-                                    <input class="form-check-input" type="radio" name="answer<%=index  %>" id="answer<%=index%>" value=<%= indexSolution%>>
-                                    <label class="form-check-label" for="answer<%=index%>">
-                                        $<%= a %>$
-                                    </label>
-                                </div>                        
-                            <% } %>
-                            <span id="msg<%=index %>" style="display: none;">
-                                <span class='alert alert-danger' id='error'>Proszę wybierz odpowiedź </span>
-                            </span>
-                            </ul>
-                            
-                            <% if(exercise.difficulty) {%> 
-                                <h6 class="card-title mb-1" >Trudność:</h6>
-                                <p class="starability-result" data-rating= <%=exercise.difficulty %>> Trudność: <%=exercise.difficulty %> stars </p>
-                            <% } %>
-                            <br>
-                        
-                        
-                            
-                        </div>
-                    </div>
-                    <% index+=1 %> 
-                <% } %>
-                <button id="endTest" type="submit" class="btn btn-success mb-3">Zapisz podejście</button>
-                
-            </form>
-          
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <h1>Rozwiąż test!</h1>
+    <div class="row">
+        <div id="timeToSolve" style="display: none;">
+            <%= timeToSolve %>
         </div>
+        <div class="col-4 offset-8">
+            <%- include('../partials/testTimer') %>
+        </div>
+
+        <% var index=0 %>
+            <div class="col-10 offset-0 ml-auto">
+                <div class="container" id="TEST">
+                    <form id="testForm" action="/branches/<%=branch._id %>/tests/<%= test._id %>/solve/<%=solvedId%>"
+                        method="POST" class="mb-5 ">
+                        <% for( let exercise of test.exercises ) { %>
+                            <div id="ex" class="card mb-3 " type="ex">
+                                <div class=" ms-3 card-body">
+                                    <h4 class="card-title">Treść zadania:</h4>
+                                    <p class="card-text  mb-2">
+                                        $<%= exercise.description %>$
+                                    </p>
+                                    <hr>
+                                    <h6 class="card-title">Wybierz odpowiedź:</h6>
+                                    <ul id="answers<%=index  %>">
+                                        <% for( let a of exercise.answers ) { %>
+                                            <div class="form-check ">
+                                                <% var indexSolution=a %>
+                                                    <input class="form-check-input" type="radio"
+                                                        name="answer<%=index  %>" id="answer<%=index%>"
+                                                        value=<%=indexSolution%>>
+                                                    <label class="form-check-label" for="answer<%=index%>">
+                                                        $<%= a %>$
+                                                    </label>
+                                            </div>
+                                            <% } %>
+                                                <span id="msg<%=index %>" style="display: none;">
+                                                    <span class='alert alert-danger' id='error'>Proszę wybierz odpowiedź
+                                                    </span>
+                                                </span>
+                                    </ul>
+
+                                    <% if(exercise.difficulty) {%>
+                                        <h6 class="card-title mb-1">Trudność:</h6>
+                                        <p class="starability-result" data-rating=<%=exercise.difficulty %>> Trudność:
+                                            <%=exercise.difficulty %> stars </p>
+                                        <% } %>
+                                            <br>
+
+
+
+                                </div>
+                            </div>
+                            <% index+=1 %>
+                                <% } %>
+                                    <button id="endTest" type="submit" class="btn btn-success mb-3">Zapisz
+                                        podejście</button>
+
+                    </form>
+
+                </div>
+            </div>
     </div>
-</div>
 
 
 
-<style>
-    #timer{
-        position: fixed;
-        width: 15em;
-        z-index : 1;
-        top:8.5em;
-        margin-top: auto;
-        right:0;
-    }
-</style>
-
-<link rel="stylesheet" href="/stylesheets/exerciseShow.css">
-<script src="/js/timerController.js"></script>
-<script src="/js/preventDataRefresh.js"></script>
-
-
-
-<script>
-    // if(sessionStorage["solving"]!==window.location.href && sessionStorage["solving"]){
-    //     if (window.confirm(`Rozpocząłeś podejście do innego testu, powróć do niego!`)) {
-    //         window.location.href=sessionStorage["solving"];
-    //     };
-    // }
-
-   
-    const controller = async()=>{
-        try{
-            console.log(window.location.href+'/timer')
-            const res = await axios.get(window.location.href+'/timer')
-            console.log('czas' ,res)
-            timerDisplay(res.data)
-        }catch(e){
-            console.log('error' ,e);
-        } 
-    }
-  
-    controller()
-        
- 
-
-
-    function fnBrowserDetect(){
-                 
-        let userAgent = navigator.userAgent;
-        let browserName;
-        
-        if(userAgent.match(/chrome|chromium|crios/i)){
-            browserName = "chrome";
-        }else if(userAgent.match(/firefox|fxios/i)){
-            browserName = "firefox";
-        }  else if(userAgent.match(/safari/i)){
-            browserName = "safari";
-        }else if(userAgent.match(/opr\//i)){
-            browserName = "opera";
-        } else if(userAgent.match(/edg/i)){
-            browserName = "edge";
-        }else{
-            browserName="No browser detection";
+    <style>
+        #timer {
+            position: fixed;
+            width: 15em;
+            z-index: 1;
+            top: 8.5em;
+            margin-top: auto;
+            right: 0;
         }
-        return browserName 
-               
-    }
+    </style>
 
-    if(fnBrowserDetect()==='chrome'){
-        window.addEventListener( "pageshow", function ( event ) {
-            var historyTraversal = event.persisted || 
-                                    ( typeof window.performance != "undefined" && 
-                                        window.performance.navigation.type === 2 );
-            if ( historyTraversal ) {
-                // Handle page restore.
-                setTimeout(window.location.reload(),100);
+    <link rel="stylesheet" href="/stylesheets/exerciseShow.css">
+    <script src="/js/timerController.js"></script>
+    <script src="/js/preventDataRefresh.js"></script>
+
+
+
+    <script>
+        // if(sessionStorage["solving"]!==window.location.href && sessionStorage["solving"]){
+        //     if (window.confirm(`Rozpocząłeś podejście do innego testu, powróć do niego!`)) {
+        //         window.location.href=sessionStorage["solving"];
+        //     };
+        // }
+
+
+        const controller = async () => {
+            try {
+                console.log(window.location.href + '/timer')
+                const res = await axios.get(window.location.href + '/timer')
+                console.log('czas', res)
+                timerDisplay(res.data)
+            } catch (e) {
+                console.log('error', e);
             }
-        });
+        }
 
-    }
-   
-    //////////////////////////////////////////////////////
+        controller()
 
-    
-</script>
 
+
+
+        function fnBrowserDetect() {
+
+            let userAgent = navigator.userAgent;
+            let browserName;
+
+            if (userAgent.match(/chrome|chromium|crios/i)) {
+                browserName = "chrome";
+            } else if (userAgent.match(/firefox|fxios/i)) {
+                browserName = "firefox";
+            } else if (userAgent.match(/safari/i)) {
+                browserName = "safari";
+            } else if (userAgent.match(/opr\//i)) {
+                browserName = "opera";
+            } else if (userAgent.match(/edg/i)) {
+                browserName = "edge";
+            } else {
+                browserName = "No browser detection";
+            }
+            return browserName
+
+        }
+
+        if (fnBrowserDetect() === 'chrome') {
+            window.addEventListener("pageshow", function (event) {
+                var historyTraversal = event.persisted ||
+                    (typeof window.performance != "undefined" &&
+                        window.performance.navigation.type === 2);
+                if (historyTraversal) {
+                    // Handle page restore.
+                    setTimeout(window.location.reload(), 100);
+                }
+            });
+
+        }
+
+
+
+    </script>

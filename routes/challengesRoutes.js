@@ -1,8 +1,6 @@
 const express =  require('express');
 const router =  express.Router({mergeParams: true});
 
-
-
 const User = require('../models/user')
 const Branch = require('../models/branch')
 const Challenge  = require('../models/challenge')
@@ -11,8 +9,6 @@ const {isLoggedIn} = require('../middleware.js');
 
 
 router.get('/', isLoggedIn, async(req, res)=>{
-    
-  
     const login = await User.findOne(res.locals.loginUser)
     .populate({
         path: 'challenges',
@@ -47,30 +43,17 @@ router.get('/', isLoggedIn, async(req, res)=>{
         activeChallenges = groupedChallenges['activeChallenges']
         doneChallenges = groupedChallenges['doneChallenges']
     
-        // console.log('PENDING', pendingChallenges)
-        // console.log('ACTIVE', activeChallenges)
-        // console.log('DONE', doneChallenges)
-        // console.log(login)
         res.render('users/challenges/challenges', { login: login, pendingChallenges: pendingChallenges, activeChallenges: activeChallenges, doneChallenges: doneChallenges})
     }else{
         pendingChallenges = []
         activeChallenges = []
         doneChallenges = []
-        // console.log(login)
         res.render('users/challenges/challenges', { login: login, pendingChallenges: pendingChallenges, activeChallenges: activeChallenges, doneChallenges: doneChallenges})
     }
-
-   
-
-    
-   
 })
 
 
-
-
 router.get('/:recieverId/newForm', isLoggedIn, async(req, res)=>{
-   // var testsOnBranch = loginUser.solvedTests.filter(solvedTest => solvedTest.test.branchId._id.equals(branch._id)) 
     var branches = await Branch.find({}).populate('tests')
     branches =  branches.filter(b => b.tests.length>0)  /// pass only branches containing tests
     const sender = await User.findOne(res.locals.loginUser)
@@ -81,6 +64,7 @@ router.get('/:recieverId/newForm', isLoggedIn, async(req, res)=>{
     console.log(req.branchId)
     res.render('users/challenges/new', {branches: branches, reciever: reciever, maxChallengeLvl: maxChallengeLvl})
 })
+
 
 router.post('/', isLoggedIn, async(req, res)=>{
     const sender = await User.findOne(res.locals.loginUser)
@@ -115,38 +99,23 @@ router.post('/', isLoggedIn, async(req, res)=>{
         const reciever = await User.findById(req.body.recieverId);
         const test = await Test.findById(testId);
 
-        console.log(reciever.username)
-
         const challenge =  new Challenge({test: test, sender: sender, reciever: reciever, recieverStatus:"pending", senderStatus:"pending", challengeStatus:"pending"})
         await challenge.save();
-        console.log('NEW CHALLENGE', challenge.reciever)
 
         sender.challenges.push(challenge)
-    
         reciever.challenges.push(challenge)
-
-
-
     
         await sender.save()
         await reciever.save()
         var pendingChallenges, activeChallenges , doneChallenges;
         if(sender.challenges.length >0 ){
-            var groupedChallenges = sender.challenges[0].groupChallenges(sender)
-           
+            var groupedChallenges = sender.challenges[0].groupChallenges(sender) 
             pendingChallenges = groupedChallenges['pendingChallenges']
             activeChallenges = groupedChallenges['activeChallenges']
             doneChallenges = groupedChallenges['doneChallenges']
-        
-            // console.log('PENDING', pendingChallenges)
-            // console.log('ACTIVE', activeChallenges)
-            // console.log('DONE', doneChallenges)
         }
-        const xd = challenge
         req.flash('success', `Wyzwano użytkownika ${reciever.username}!`);
-        ///res.send(req.body.testId)
         res.redirect('/')
-        //res.render('users/challenges/challenges', { login: sender, pendingChallenges: pendingChallenges, activeChallenges: activeChallenges, doneChallenges: doneChallenges})
     }
     catch(e){
         req.flash('error', 'Podano nieprawidłowe dane.')

@@ -14,8 +14,8 @@ router.route('/')
 
     
 router.route('/:testId/solve')
-    //.get(isLoggedIn, repeatSolveThreshold, checkStarsAmount, asyncHandler(testController.solveForm))
     .get(isLoggedIn, repeatSolveThreshold, checkStarsAmount, asyncHandler(testController.createSolvedTest))
+
 
 router.get('/:testId/solve/:solvedId/summary', isLoggedIn, testController.summaryForm)
 
@@ -26,16 +26,14 @@ router.get('/:testId/solve/:solvedId/:name', async(req, res)=>{
     return res.send(JSON.stringify(x))
 })
 
+
 router.route('/:testId/solve/:solvedId')
     .get(isLoggedIn, repeatSolveThreshold, checkStarsAmount, asyncHandler(testController.solveForm))
     .post(isLoggedIn, preventSolveRepeat, repeatSolveThreshold, checkStarsAmount, asyncHandler(testController.solve));
 
 
-
-
 router.route('/:testId')
     .get(isStudent,  asyncHandler(testController.show))
-
 
 
 module.exports = router;

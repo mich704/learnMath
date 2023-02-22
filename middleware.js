@@ -1,7 +1,7 @@
 const Test =  require('./models/testModel')
 const solvedTest =  require('./models/solvedTest')
 const User =  require('./models/user');
-const Challenge = require('./models/challenge');
+
 
 const isLoggedIn =  (req, res, next)=>{
     if(!req.isAuthenticated()){  
@@ -23,6 +23,7 @@ const isAdmin = (req, res, next)=>{
     next();
 }
 
+
 const isStudent = (req, res, next)=>{
     if(res.locals.loginUser.role === 'Uczeń'){
         req.session.prevPage = req.originalUrl;         
@@ -37,38 +38,25 @@ const repeatSolveThreshold = async(req, res, next)=>{
     var latestSolve = null;
     const login = await User.findOne(res.locals.loginUser).populate('solvedTests')
     const toSolve =  await Test.findById(req.params.testId);
-    //const existingSolved = await login.solvedTests.findOne({'test': toSolve})
-    //latestSolve = Array(login.solvedTests).findLast((solved) => solved.test.equals(toSolve._id));
-   
-    // login.solvedTests.every(solved => {
-    //     if(solved.test.equals(toSolve._id)){
-    //         latestSolve = solved;
-    //         return false;
-    //     }
-    // });
 
     for(var i= login.solvedTests.length-1 ; i>=0 ; i--){
-        //console.log("CHECK",toSolve, login.solvedTests[i].test)
         if(login.solvedTests[i].test.equals(toSolve._id)){
             latestSolve = login.solvedTests[i];
             break;
         }
     }
-    ///console.log('LATEST', latestSolve)
     if(latestSolve){
         const total =  new Date().getTime()- new Date(latestSolve.updatedAt).getTime();
         const hours = (Math.floor((total)/1000))/3600;
         var minutes = Math.floor(hours * 60)
-        ///console.log('MINUTEwqdS', minutes, login.role,  latestSolve)
-        if(minutes < 60 && login.role === "Uczeń"){
-           
+        if(minutes < 60 && login.role === "Uczeń"){   
             req.flash('error', `Ponowne rozwiązanie testu będzie możliwe za ${60 - minutes} min `);
             return res.redirect( 'back');    
         }
-        //console.log(wasSolved, toSolve, hours)
     }
     next()
 }
+
 
 const checkStarsAmount = async(req,res,next)=>{
     const login = await User.findOne(res.locals.loginUser)
@@ -106,10 +94,5 @@ const preventSolveRepeat = async(req,res,next)=>{
     }    
     next()
 }
-
-
-
-
-
 
 module.exports = {isLoggedIn, preventSolveRepeat, isStudent, repeatSolveThreshold, isAdmin, checkStarsAmount}

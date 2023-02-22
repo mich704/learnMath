@@ -19,13 +19,8 @@ const validateExercise = (req, res, next) =>{
         next();
     }
 }
-
-/// EXERCISES ROUTES
-/// isLoggedIn middleware to be added in every route!!!
-
 router.route('/')
     .post(asyncHandler(exerciseController.create))
-
 
 
 router.get('/newExercise', isLoggedIn, isStudent,  asyncHandler(async(req, res)=>{
@@ -33,7 +28,6 @@ router.get('/newExercise', isLoggedIn, isStudent,  asyncHandler(async(req, res)=
     const branch = await Branch.findById(id) 
     res.render('exercises/new', {branch})
 }))
-
 
 
 router.get('/:exerciseId/edit',isLoggedIn, isStudent,  asyncHandler(exerciseController.updateForm));

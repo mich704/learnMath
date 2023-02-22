@@ -39,11 +39,7 @@ router.post('/register', async(req, res)=>{
                     await lvlPoint.save()
                 }
             }
-
-            //await user.save()
-            
             const registeredUser = await User.register(user, password)  /// saves user and authenticates, hashes password etc.
-            //registeredUser.role = role
             
             req.login(registeredUser, err => {
                 if (err){
@@ -66,6 +62,7 @@ router.post('/register', async(req, res)=>{
 
 })
 
+
 router.get('/login', async(req, res)=>{
     if(!req.user){ 
         res.render('login')
@@ -75,6 +72,7 @@ router.get('/login', async(req, res)=>{
     }
 });
 
+
 router.post('/login', passport.authenticate('local', {failureFlash: 'Podano nieprawidłowe dane logowania.', failureRedirect:'/login', keepSessionInfo: true}),async(req, res)=>{
     req.flash('success','Witamy ponownie!');  
     const prevPage = req.session.prevPage || '/branches';
@@ -82,6 +80,7 @@ router.post('/login', passport.authenticate('local', {failureFlash: 'Podano niep
     User.updateLastLoginTime(req.user._id, Date.now())
     res.redirect(prevPage);
 });
+
 
 router.get('/logout', (req, res)=>{
     req.logout(function(err) {
