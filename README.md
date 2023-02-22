@@ -12,7 +12,7 @@ Following application supports high school students in learnig basics math issue
 * ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
 * ![Bootstrap](https://img.shields.io/badge/bootstrap-%23563D7C.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
 * ![jQuery](https://img.shields.io/badge/jquery-%230769AD.svg?style=for-the-badge&logo=jquery&logoColor=white)
-* ![alt text](./mathquill.png) mathquill- Easily type math in your webapp [![Documentation Status](https://readthedocs.org/projects/mathquill/badge/?version=latest)](http://docs.mathquill.com/en/latest/?badge=latest)
+* ![alt text](./mathquill.png) [![Documentation Status](https://readthedocs.org/projects/mathquill/badge/?version=latest)](http://docs.mathquill.com/en/latest/?badge=latest)
 
 
 
