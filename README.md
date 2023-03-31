@@ -51,13 +51,13 @@ nodemon server.js
 ```
 ## Basic scenario
 
--Solving test (student user):
+- Solving test (student user):
 
 ![levels](images/levels.png)
 ![chooseTest](images/chooseTest.png)
 ![testAttempt](images/testAttempt.png)
 
--Creating math exercise for given branch (teacher user):
+- Creating math exercise for given branch (teacher user):
 
 ![createExercise1](images/createExercise1.png)
 ![createExercise2](images/createExercise2.png)
