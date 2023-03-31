@@ -50,3 +50,5 @@ To start application execute:
 nodemon server.js
 ```
 
+![levels](images/levels.png)
+![testAttempt](images/testAttempt.png)
