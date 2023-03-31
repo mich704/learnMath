@@ -4,7 +4,7 @@ const Image  = require('../models/image');
 const multer = require('multer');
 const fs =  require('fs')
 var path = require('path');
-const { exerciseSchema} = require('../schemas.js');
+const { exerciseSchema} = require('../src/schemas.js');
 const ExpressError =  require('../utils/ExpressError');
 
 const validateExercise = (req, res) =>{  

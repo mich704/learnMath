@@ -2,12 +2,12 @@ const express =  require('express');
 const Exercise  = require('../models/exercise');
 const router =  express.Router({mergeParams: true});
 const exerciseController = require('../controllers/exercises')
-const {isLoggedIn, isStudent} = require('../middleware.js');
+const {isLoggedIn, isStudent} = require('../src/middleware.js');
 const ExpressError =  require('../utils/ExpressError');
 const Branch = require('../models/branch')
 const asyncHandler =  require('../utils/asyncHandler');
 
-const { exerciseSchema} = require('../schemas.js');
+const { exerciseSchema} = require('../src/schemas.js');
 
 const validateExercise = (req, res, next) =>{  
     console.log(req.body)

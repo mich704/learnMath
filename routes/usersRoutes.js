@@ -2,7 +2,7 @@ const express =  require('express');
 const router =  express.Router({mergeParams: true});
 const User = require('../models/user')
 const Branch = require('../models/branch')
-const {isLoggedIn} = require('../middleware.js');
+const {isLoggedIn} = require('../src/middleware.js');
 
 
 

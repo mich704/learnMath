@@ -5,7 +5,7 @@ const User = require('../models/user')
 const Branch = require('../models/branch')
 const Challenge  = require('../models/challenge')
 const Test  = require('../models/testModel')
-const {isLoggedIn} = require('../middleware.js');
+const {isLoggedIn} = require('../src/middleware.js');
 
 
 router.get('/', isLoggedIn, async(req, res)=>{

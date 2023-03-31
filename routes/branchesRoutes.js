@@ -4,10 +4,10 @@ const router =  express.Router({mergeParams: true}); // need to merge request pa
 const Branch = require('../models/branch')
 const asyncHandler =  require('../utils/asyncHandler');
 const ExpressError =  require('../utils/ExpressError');
-const {isLoggedIn, isStudent,isAdmin} = require('../middleware.js');
+const {isLoggedIn, isStudent,isAdmin} = require('../src/middleware.js');
 const branchController = require('../controllers/branches.js')
 
-const { branchSchema} = require('../schemas.js');
+const { branchSchema} = require('../src/schemas.js');
 
 const validateBranch = (req, res, next) =>{  
     const {error} = branchSchema.validate(req.body)

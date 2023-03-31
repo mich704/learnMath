@@ -7,7 +7,7 @@ const LevelPoint = require('../models/levelPoints')
 const asyncHandler =  require('../utils/asyncHandler');
 const ExpressError =  require('../utils/ExpressError')
 const passport =  require('passport')  
-const {isLoggedIn, isStudent} = require('../middleware.js');
+const {isLoggedIn, isStudent} = require('../src/middleware.js');
 
 router.get('/register', (req, res)=>{
     if(!req.user){ 

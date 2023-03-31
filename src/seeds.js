@@ -1,16 +1,16 @@
 const mongoose = require('mongoose');
-const Branch =  require('./models/branch');
-const Exercise = require('./models/exercise');
-const Test = require('./models/testModel');
+const Branch =  require('../models/branch');
+const Exercise = require('../models/exercise');
+const Test = require('../models/testModel');
 
-const SolvedTest = require('./models/solvedTest');
-const TestResult = require('./models/testResult');
-const db = require('./models')
-const roles = require('./utils/roles');
-const { User } = require('./models');
-const LevelPoint = require('./models/levelPoints');
-const Level = require('./models/level');
-const Challenge = require('./models/challenge');
+const SolvedTest = require('../models/solvedTest');
+const TestResult = require('../models/testResult');
+const db = require('../models')
+const roles = require('../utils/roles');
+const { User } = require('../models');
+const LevelPoint = require('../models/levelPoints');
+const Level = require('../models/level');
+const Challenge = require('../models/challenge');
 
 main().catch(err => console.log(err));
 

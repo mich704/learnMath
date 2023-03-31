@@ -1,6 +1,6 @@
 const express =  require('express');
 const router =  express.Router({mergeParams: true});
-const {isLoggedIn, preventSolveRepeat, isStudent, repeatSolveThreshold, checkStarsAmount} = require('../middleware.js');
+const {isLoggedIn, preventSolveRepeat, isStudent, repeatSolveThreshold, checkStarsAmount} = require('../src/middleware.js');
 const asyncHandler =  require('../utils/asyncHandler');
 const testController = require('../controllers/tests.js')
 const {timer}  = require('../controllers/axiosTest.js')

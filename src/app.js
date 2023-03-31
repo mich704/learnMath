@@ -3,28 +3,28 @@ const app = express();
 const path =  require('path');
 var methodOverride = require('method-override')
 const ejsMate =  require('ejs-mate') // partials
-const ExpressError =  require('./utils/ExpressError')
+const ExpressError =  require('../utils/ExpressError')
 const session = require('express-session');
 const flash =  require('connect-flash');
 const bodyParser = require('body-parser');
 const mongoSanitize = require('express-mongo-sanitize');
 
-const User = require('./models/user')
+const User = require('../models/user')
 
 const passport =  require('passport')  
 const LocalStrategy =  require('passport-local')  
 
-const branches = require('./routes/branchesRoutes');
-const exercises = require('./routes/exercisesRoutes');
-const auth = require('./routes/authRoutes');
-const testsRoutes = require('./routes/testsRoutes');
-const usersRoutes = require('./routes/usersRoutes');
-const challengesRoutes = require('./routes/challengesRoutes');
+const branches = require('../routes/branchesRoutes');
+const exercises = require('../routes/exercisesRoutes');
+const auth = require('../routes/authRoutes');
+const testsRoutes = require('../routes/testsRoutes');
+const usersRoutes = require('../routes/usersRoutes');
+const challengesRoutes = require('../routes/challengesRoutes');
 
-const ROLES =  require('./utils/roles');
+const ROLES =  require('../utils/roles');
 
 app.engine('ejs', ejsMate)
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'ejs');
 
 app.use(bodyParser.json())
@@ -32,7 +32,7 @@ app.use(bodyParser.urlencoded({extended:true})) /// needed to get POST method bo
 app.use(mongoSanitize());
 
 app.use(methodOverride('_method'))
-app.use(express.static( path.join(__dirname, 'public')));
+app.use(express.static( path.join(__dirname, '../public')));
 
 const sessionConfig ={
     secret: 'genericSecret',

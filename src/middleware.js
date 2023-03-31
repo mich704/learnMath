@@ -1,6 +1,6 @@
-const Test =  require('./models/testModel')
-const solvedTest =  require('./models/solvedTest')
-const User =  require('./models/user');
+const Test =  require('../models/testModel')
+const solvedTest =  require('../models/solvedTest')
+const User =  require('../models/user');
 
 
 const isLoggedIn =  (req, res, next)=>{

@@ -28,6 +28,7 @@ public  | public assets (js packages, images and stylesheets)
 routes  | HTTP endpoints for db models 
 utils  | backend and frontend error handling
 views  | ejs views templates
+src | application and database setup scripts
 
 
 ## Local setup
@@ -41,13 +42,13 @@ npm-install
 Then setup database, below command will connect and insert basic data into database:
 
 ```
-node seeds.js
+npm run seedDatabase
 ```
 
 To start application execute:
 
 ```
-nodemon server.js
+npm start
 ```
 ## Basic scenario
 

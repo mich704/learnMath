@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon ./src/server.js",
+    "seedDatabase": "node ./src/seeds.js",
     "test": "jest --forceExit"
   },
   "keywords": [],
