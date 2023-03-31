@@ -49,7 +49,8 @@ To start application execute:
 ```
 nodemon server.js
 ```
-Basic scenario of solving test for student user:
+## Basic scenario
+    Solving test for student user:
 ![levels](images/levels.png)
 ![chooseTest](images/chooseTest.png)
 ![testAttempt](images/testAttempt.png)
