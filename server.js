@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const app = require('./app')
-const DB = 'mongodb://localhost:27017/mathApp'
+const DB = 'mongodb://localhost:27017/mathApp1'
 
 main().catch(err => console.log(err));
 

@@ -3,10 +3,10 @@
 const mongoose = require('mongoose');
 
 
-const Exercise = require('./models/exercise');
-const Test = require('./models/testModel');
-const Challenge = require('./models/challenge');
-const DB = 'mongodb://localhost:27017/mathApp'
+const Exercise = require('../models/exercise');
+const Test = require('../models/testModel');
+const Challenge = require('../models/challenge');
+const DB = 'mongodb://localhost:27017/'
 
 describe('Test Exercise Model', () => {
     let connection;

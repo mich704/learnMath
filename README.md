@@ -5,6 +5,7 @@ Following application supports high school students in learnig basics math issue
 ## Requirements
 
 - Install Node.js
+- Install MongoDB
 
 
 ## Built With
@@ -27,3 +28,25 @@ public  | public assets (js packages, images and stylesheets)
 routes  | HTTP endpoints for db models 
 utils  | backend and frontend error handling
 views  | ejs views templates
+
+
+## Local setup
+
+After cloning repo, cd into learnMath directory, then install Node modules by:
+
+```
+npm-install
+```
+
+Then setup database, below command will connect and insert basic data into database:
+
+```
+node seeds.js
+```
+
+To start application execute:
+
+```
+nodemon server.js
+```
+

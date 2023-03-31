@@ -15,7 +15,7 @@ const Challenge = require('./models/challenge');
 main().catch(err => console.log(err));
 
 async function main() {
-  await mongoose.connect('mongodb://localhost:27017/mathApp')
+  await mongoose.connect('mongodb://localhost:27017/mathApp1')
     .then(() =>{
         console.log("MONGO CONNECTION OPEN!")
     })
@@ -28,7 +28,7 @@ async function main() {
 
 
 
-const branches = [
+const branchesData = [
     {
         name: 'Trygonometria',
         description: 'Dział matematyki, którego przedmiotem badań są związki miarowe między bokami i kątami trójkątów oraz funkcje trygonometryczne. Trygonometria powstała i rozwinęła się głównie w związku z zagadnieniami pomiarów na powierzchni Ziemi oraz potrzebami żeglugi morskiej',
@@ -134,8 +134,9 @@ const addExerciseToBranch = async(branchId, exercise)=> {
 
 
 const seedDB = async()=>{
-    ///await Branch.deleteMany({});
-    // await Exercise.deleteMany({});
+    console.log(branchesData)
+    await Branch.deleteMany({});
+    await Exercise.deleteMany({});
     await Test.deleteMany({});
     await SolvedTest.deleteMany({});
     await TestResult.deleteMany({});
@@ -143,12 +144,17 @@ const seedDB = async()=>{
     await Level.deleteMany({});
     await Branch.updateMany({}, {$set: {tests:[]}})
     
-   
+   for(let b of branchesData){
+        var newBranch = new Branch({...b});
+        ///console.log({...b})
+        await newBranch.save()
+   }
+
     const users =  await User.find({});
 
     for(let i = 1 ; i<=5 ; i++){
         var newLevel = new Level({level: i, starThreshold: i*10-10, tests: []})
-        console.log(newLevel)
+        ///console.log(newLevel)
         await newLevel.save();
     }
     var branches = await Branch.find({});
@@ -160,7 +166,7 @@ const seedDB = async()=>{
         user.levelPoints.forEach(async(element)=>{
             await LevelPoint.deleteOne({element})
         })
-        console.log(user.levelPoints)
+        ///console.log(user.levelPoints)
         for(let branch of branches){
             for(let i=1 ; i<=5 ; i++){
                 var count = String(i);
@@ -182,17 +188,16 @@ const seedDB = async()=>{
     //     await newBranch.save();
     // }
     
-    //var trigBranch = await db.Branch.find({name: "Trygonometria"})
+    var trigBranch = await db.Branch.find({name: "Trygonometria"})
 
-    // for( let ex of  trigExercises){
-    //     console.log(ex.solution)
-    //     const newEx = new Exercise(ex);
-    //     await newEx.save();
-    //     console.log(newEx)
-    //     await db.Branch.findByIdAndUpdate(trigBranch, {$push: {exercises: {...newEx}}})
-    // } 
+    for( let ex of  trigExercises){
+        ///console.log(ex)
+        const newEx = new Exercise(ex);
+        await newEx.save();
+        console.log('NEW', newEx)
+        await Branch.findByIdAndUpdate(trigBranch, {$push: {exercises: {...newEx}}})
+    } 
 }
-
 
 
 seedDB()
